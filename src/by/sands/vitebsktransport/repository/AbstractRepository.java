@@ -7,7 +7,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import by.sands.vitebsktransport.db.SQLiteHelper;
-import by.sands.vitebsktransport.model.DBObject;
+import by.sands.vitebsktransport.domain.DBObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +57,22 @@ public abstract class AbstractRepository<T extends DBObject> {
         Log.i(null, "Getting all from [" + tableName + "]");
         List<T> result = new ArrayList<T>();
         Cursor cursor = database.query(tableName, getAllColumns(), null, null, null, null, null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            T obj = cursorToDomain(cursor);
+            result.add(obj);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        Log.i(null, "Got [" + result.size() + "] items from [" + tableName + "]");
+        return result;
+    }
+
+    public List<T> getAll(String selection, String... selectionArgs) {
+        Log.i(null, "Getting from [" + tableName + "] with selection = [" + selection +
+                "] and args = " + selectionArgs);
+        List<T> result = new ArrayList<T>();
+        Cursor cursor = database.query(tableName, getAllColumns(), selection, selectionArgs, null, null, null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             T obj = cursorToDomain(cursor);

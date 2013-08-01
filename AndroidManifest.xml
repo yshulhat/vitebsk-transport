@@ -33,6 +33,10 @@
             android:name="by.sands.vitebsktransport.DirectionsList"
             android:label="@string/title_activity_directions_list" >
         </activity>
+        <activity
+            android:name="by.sands.vitebsktransport.DeparturesList"
+            android:label="@string/title_activity_departures_list" >
+        </activity>
     </application>
 
 </manifest>

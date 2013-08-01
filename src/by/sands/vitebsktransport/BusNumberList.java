@@ -12,7 +12,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import by.sands.vitebsktransport.model.Route;
+import by.sands.vitebsktransport.domain.Route;
 import by.sands.vitebsktransport.service.RouteService;
 
 import java.util.List;

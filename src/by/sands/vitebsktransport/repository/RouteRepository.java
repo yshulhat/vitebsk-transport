@@ -3,7 +3,7 @@ package by.sands.vitebsktransport.repository;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import by.sands.vitebsktransport.model.Route;
+import by.sands.vitebsktransport.domain.Route;
 
 public class RouteRepository extends AbstractRepository<Route> {
     private static final String   TABLE = "routes";

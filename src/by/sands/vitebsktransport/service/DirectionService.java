@@ -1,7 +1,7 @@
 package by.sands.vitebsktransport.service;
 
 import android.content.Context;
-import by.sands.vitebsktransport.model.Direction;
+import by.sands.vitebsktransport.domain.Direction;
 import by.sands.vitebsktransport.repository.DirectionRepository;
 
 import java.util.List;

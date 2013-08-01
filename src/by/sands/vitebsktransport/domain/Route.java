@@ -1,4 +1,4 @@
-package by.sands.vitebsktransport.model;
+package by.sands.vitebsktransport.domain;
 
 public class Route extends DBObject {
     private String name;

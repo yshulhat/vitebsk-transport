@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import by.sands.vitebsktransport.model.Direction;
+import by.sands.vitebsktransport.domain.Direction;
 import by.sands.vitebsktransport.service.DirectionService;
 
 import java.util.List;

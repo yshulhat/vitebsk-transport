@@ -1,4 +1,4 @@
-package by.sands.vitebsktransport.model;
+package by.sands.vitebsktransport.domain;
 
 public class DBObject {
     private long id;

@@ -3,7 +3,7 @@ package by.sands.vitebsktransport.service;
 import java.util.List;
 
 import android.content.Context;
-import by.sands.vitebsktransport.model.Route;
+import by.sands.vitebsktransport.domain.Route;
 import by.sands.vitebsktransport.repository.RouteRepository;
 
 public class RouteService {
