@@ -37,6 +37,14 @@
             android:name="by.sands.vitebsktransport.DeparturesList"
             android:label="@string/title_activity_departures_list" >
         </activity>
+        <activity
+            android:name="by.sands.vitebsktransport.StopsList"
+            android:label="@string/title_activity_stops_list" >
+        </activity>
+        <activity
+            android:name="by.sands.vitebsktransport.DaysList"
+            android:label="@string/title_activity_days_list" >
+        </activity>
     </application>
 
 </manifest>

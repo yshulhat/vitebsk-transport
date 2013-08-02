@@ -58,4 +58,9 @@ public class Departure extends DBObject {
         this.directionId = directionId;
     }
 
+    @Override
+    public String toString() {
+        return day + ": " + time;
+    }
+
 }

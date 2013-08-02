@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.util.Log;
 import by.sands.vitebsktransport.domain.Departure;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DepartureRepository extends AbstractRepository<Departure> {
@@ -16,10 +17,25 @@ public class DepartureRepository extends AbstractRepository<Departure> {
         super(context, TABLE);
     }
 
-    public List<Departure> getAll(long directionId) {
-        Log.i(null, "Getting all departures for direction [" + directionId + "]");
-        List<Departure> result = getAll("direction_id = ?", Long.toString(directionId));
-        Log.i(null, "Got [" + result.size() + "] departures for direction [" + directionId + "]");
+    public List<Departure> getAll(long directionId, String day) {
+        Log.i(null, "Getting all departures for direction [" + directionId + "] and day [" + day + "]");
+        List<Departure> result = getAll("direction_id = ? and day = ?", Long.toString(directionId), day);
+        Log.i(null, "Got [" + result.size() + "] departures for direction [" + directionId + "] and day [" + day + "]");
+        return result;
+    }
+
+    public List<String> getDaysForDirection(long directionId) {
+        Log.i(null, "Getting days for direction [" + directionId + "]");
+        List<String> result = new ArrayList<String>();
+        Cursor cursor = getDb().query(true, TABLE, new String[] {"day"}, "direction_id = ?",
+                new String[] {Long.toString(directionId)}, null, null, null, null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            result.add(cursor.getString(0));
+            cursor.moveToNext();
+        }
+        cursor.close();
+        Log.i(null, "Got [" + result.size() + "] day(s) for direction [" + directionId + "]");
         return result;
     }
 

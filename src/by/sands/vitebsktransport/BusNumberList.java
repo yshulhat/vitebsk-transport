@@ -25,7 +25,6 @@ public class BusNumberList extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bus_number_list);
         routeService = new RouteService(this);
-        routeService.open();
 
         List<Route> routes = routeService.findAll();
         ArrayAdapter<Route> adapter = new ArrayAdapter<Route>(this, android.R.layout.simple_list_item_1, routes);

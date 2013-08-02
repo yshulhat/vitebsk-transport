@@ -20,6 +20,7 @@ public abstract class AbstractRepository<T extends DBObject> {
     public AbstractRepository(Context context, String tableName) {
         dbHelper = new SQLiteHelper(context);
         this.tableName = tableName;
+        open();
     }
 
     public SQLiteDatabase getDb() {
