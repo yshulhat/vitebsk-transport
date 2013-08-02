@@ -1,5 +1,6 @@
 package by.sands.vitebsktransport.repository;
 
+import static by.sands.vitebsktransport.Constants.TAG;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -28,34 +29,34 @@ public abstract class AbstractRepository<T extends DBObject> {
     }
 
     public void open() throws SQLException {
-        Log.i(null, "Opening DB helper");
+        Log.i(TAG, "Opening DB helper");
         database = dbHelper.getWritableDatabase();
-        Log.i(null, "Opened DB helper");
+        Log.i(TAG, "Opened DB helper");
     }
 
     public void close() {
-        Log.i(null, "Closing DB helper");
+        Log.i(TAG, "Closing DB helper");
         dbHelper.close();
-        Log.i(null, "Closed DB helper");
+        Log.i(TAG, "Closed DB helper");
     }
 
     public T create(T obj) {
         ContentValues values = fillValues(obj);
-        Log.i(null, "Creating in [" + tableName + "] object: " + obj);
+        Log.i(TAG, "Creating in [" + tableName + "] object: " + obj);
         long id = database.insert(tableName, null, values);
         obj.setId(id);
-        Log.i(null, "Created in [" + tableName + "] object: " + obj);
+        Log.i(TAG, "Created in [" + tableName + "] object: " + obj);
         return obj;
     }
 
     public void delete(long id) {
-        Log.i(null, "Deleting from [" + tableName + "] with id: " + id);
+        Log.i(TAG, "Deleting from [" + tableName + "] with id: " + id);
         database.delete(tableName, "_id = " + id, null);
-        Log.i(null, "Deleted from [" + tableName + "] with id: " + id);
+        Log.i(TAG, "Deleted from [" + tableName + "] with id: " + id);
     }
 
     public List<T> getAll() {
-        Log.i(null, "Getting all from [" + tableName + "]");
+        Log.i(TAG, "Getting all from [" + tableName + "]");
         List<T> result = new ArrayList<T>();
         Cursor cursor = database.query(tableName, getAllColumns(), null, null, null, null, null);
         cursor.moveToFirst();
@@ -65,12 +66,12 @@ public abstract class AbstractRepository<T extends DBObject> {
             cursor.moveToNext();
         }
         cursor.close();
-        Log.i(null, "Got [" + result.size() + "] items from [" + tableName + "]");
+        Log.i(TAG, "Got [" + result.size() + "] items from [" + tableName + "]");
         return result;
     }
 
     public List<T> getAll(String selection, String... selectionArgs) {
-        Log.i(null, "Getting from [" + tableName + "] with selection = [" + selection +
+        Log.i(TAG, "Getting from [" + tableName + "] with selection = [" + selection +
                 "] and args = " + selectionArgs);
         List<T> result = new ArrayList<T>();
         Cursor cursor = database.query(tableName, getAllColumns(), selection, selectionArgs, null, null, null);
@@ -81,7 +82,7 @@ public abstract class AbstractRepository<T extends DBObject> {
             cursor.moveToNext();
         }
         cursor.close();
-        Log.i(null, "Got [" + result.size() + "] items from [" + tableName + "]");
+        Log.i(TAG, "Got [" + result.size() + "] items from [" + tableName + "]");
         return result;
     }
 

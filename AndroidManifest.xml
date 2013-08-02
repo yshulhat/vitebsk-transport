@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="by.sands.vitebsktransport.BusNumberList"
+            android:name="by.sands.vitebsktransport.TransportNumberList"
             android:label="@string/title_activity_bus_number_list" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

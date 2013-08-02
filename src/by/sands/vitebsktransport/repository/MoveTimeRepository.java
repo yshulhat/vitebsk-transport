@@ -1,5 +1,6 @@
 package by.sands.vitebsktransport.repository;
 
+import static by.sands.vitebsktransport.Constants.TAG;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -17,9 +18,9 @@ public class MoveTimeRepository extends AbstractRepository<MoveTime> {
     }
 
     public List<MoveTime> getAll(long directionId) {
-        Log.i(null, "Getting all move times for direction [" + directionId + "]");
+        Log.i(TAG, "Getting all move times for direction [" + directionId + "]");
         List<MoveTime> result = getAll("direction_id = ?", Long.toString(directionId));
-        Log.i(null, "Got [" + result.size() + "] move times for direction [" + directionId + "]");
+        Log.i(TAG, "Got [" + result.size() + "] move times for direction [" + directionId + "]");
         return result;
     }
 

@@ -1,21 +1,20 @@
 package by.sands.vitebsktransport.db;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
+import static by.sands.vitebsktransport.Constants.TAG;
 import android.content.Context;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 public class SQLiteHelper extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;
     public static final String DB_NAME = "time_table.db";
-
-//    private String dbPath;
 
     private Context ctx;
 
@@ -27,13 +26,10 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         openDataBase(dbPath);
     }
 
-    private /*SQLiteDatabase*/ void openDataBase(String dbPath) throws SQLException {
+    private void openDataBase(String dbPath) throws SQLException {
         String path = dbPath + DB_NAME;
-//        if (database == null) {
-            createDataBase(dbPath);
-            /*database = */SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.OPEN_READWRITE);
-//        }
-//        return database;
+        createDataBase(dbPath);
+        SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.OPEN_READWRITE);
     }
 
     public void createDataBase(String dbPath) {
@@ -43,11 +39,11 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             try {
                 copyDataBase(dbPath);
             } catch (IOException e) {
-                Log.e(this.getClass().toString(), "Copying error");
+                Log.e(TAG, "Copying error");
                 throw new Error("Error copying database!");
             }
         } else {
-            Log.i(this.getClass().toString(), "Database already exists");
+            Log.i(TAG, "Database already exists");
         }
     }
 
@@ -57,7 +53,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             String path = dbPath + DB_NAME;
             checkDb = SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.OPEN_READONLY);
         } catch (SQLException e) {
-            Log.e(this.getClass().toString(), "Error while checking db");
+            Log.e(TAG, "Error while checking db");
         }
         if (checkDb != null) {
             checkDb.close();

@@ -18,7 +18,7 @@ public class Main extends Activity {
         cityRoutes.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), BusNumberList.class);
+                Intent intent = new Intent(getApplicationContext(), TransportNumberList.class);
                 startActivity(intent);
             }
         });

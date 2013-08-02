@@ -1,5 +1,6 @@
 package by.sands.vitebsktransport.repository;
 
+import static by.sands.vitebsktransport.Constants.TAG;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -18,7 +19,7 @@ public class StopRepository extends AbstractRepository<Stop> {
     }
 
     public List<Stop> getForDirection(long directionId) {
-        Log.i(null, "Getting stops for direction [" + directionId + "]");
+        Log.i(TAG, "Getting stops for direction [" + directionId + "]");
         List<Stop> result = new ArrayList<Stop>();
         Cursor cursor = getDb().query("move_times t inner join stops s on t.from_stop_id = s._id",
                 new String[] {"s._id", "s.name", "s.coords"}, "t.direction_id = ?",
@@ -30,7 +31,7 @@ public class StopRepository extends AbstractRepository<Stop> {
             cursor.moveToNext();
         }
         cursor.close();
-        Log.i(null, "Got [" + result.size() + "] stops for direction [" + directionId + "]");
+        Log.i(TAG, "Got [" + result.size() + "] stops for direction [" + directionId + "]");
         return result;
     }
 

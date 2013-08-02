@@ -3,6 +3,7 @@ package by.sands.vitebsktransport.domain;
 public class Route extends DBObject {
     private String name;
     private String number;
+    private String type;
 
     public Route() {
     }
@@ -10,6 +11,12 @@ public class Route extends DBObject {
     public Route(String number, String name) {
         this.number = number;
         this.name = name;
+    }
+
+    public Route(String number, String name, String type) {
+        this.number = number;
+        this.name = name;
+        this.type = type;
     }
 
     public String getName() {
@@ -26,6 +33,14 @@ public class Route extends DBObject {
 
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     @Override

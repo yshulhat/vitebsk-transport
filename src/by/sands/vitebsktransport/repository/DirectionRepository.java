@@ -1,5 +1,6 @@
 package by.sands.vitebsktransport.repository;
 
+import static by.sands.vitebsktransport.Constants.TAG;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -17,9 +18,9 @@ public class DirectionRepository extends AbstractRepository<Direction> {
     }
 
     public List<Direction> getAll(long routeId) {
-        Log.i(null, "Getting all directions for route [" + routeId + "]");
+        Log.i(TAG, "Getting all directions for route [" + routeId + "]");
         List<Direction> result = getAll("route_id = ?", Long.toString(routeId));
-        Log.i(null, "Got [" + result.size() + "] directions for route [" + routeId + "]");
+        Log.i(TAG, "Got [" + result.size() + "] directions for route [" + routeId + "]");
         return result;
     }
 

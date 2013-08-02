@@ -7,7 +7,7 @@ import by.sands.vitebsktransport.domain.Route;
 
 public class RouteRepository extends AbstractRepository<Route> {
     private static final String   TABLE = "routes";
-    private static final String[] COLUMNS = { "_id", "name", "number" };
+    private static final String[] COLUMNS = { "_id", "name", "number", "type" };
 
     public RouteRepository(Context context) {
         super(context, TABLE);
@@ -19,6 +19,7 @@ public class RouteRepository extends AbstractRepository<Route> {
         route.setId(cursor.getLong(0));
         route.setName(cursor.getString(1));
         route.setNumber(cursor.getString(2));
+        route.setType(cursor.getString(3));
         return route;
     }
 
@@ -32,6 +33,7 @@ public class RouteRepository extends AbstractRepository<Route> {
         ContentValues values = new ContentValues();
         values.put("name", obj.getName());
         values.put("number", obj.getNumber());
+        values.put("type", obj.getType());
         return values;
     }
 }

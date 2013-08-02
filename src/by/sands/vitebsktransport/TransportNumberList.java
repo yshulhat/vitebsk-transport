@@ -17,13 +17,13 @@ import by.sands.vitebsktransport.service.RouteService;
 
 import java.util.List;
 
-public class BusNumberList extends ListActivity {
+public class TransportNumberList extends ListActivity {
     private RouteService routeService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bus_number_list);
+        setContentView(R.layout.activity_transport_number_list);
         routeService = new RouteService(this);
 
         List<Route> routes = routeService.findAll();
@@ -42,7 +42,7 @@ public class BusNumberList extends ListActivity {
                     intent.putExtra("route", route.getId());
                     startActivity(intent);
                 } else {
-                    new AlertDialog.Builder(BusNumberList.this)
+                    new AlertDialog.Builder(TransportNumberList.this)
                             .setTitle("Ошибка")
                             .setMessage("Ошибка открытия списка направлений")
                             .setPositiveButton("Ok", null)
