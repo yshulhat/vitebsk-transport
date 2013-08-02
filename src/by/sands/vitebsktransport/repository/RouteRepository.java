@@ -1,9 +1,13 @@
 package by.sands.vitebsktransport.repository;
 
+import static by.sands.vitebsktransport.Constants.TAG;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 import by.sands.vitebsktransport.domain.Route;
+
+import java.util.List;
 
 public class RouteRepository extends AbstractRepository<Route> {
     private static final String   TABLE = "routes";
@@ -11,6 +15,13 @@ public class RouteRepository extends AbstractRepository<Route> {
 
     public RouteRepository(Context context) {
         super(context, TABLE);
+    }
+
+    public List<Route> getAll(String transportType) {
+        Log.i(TAG, "Getting routes for transport type [" + transportType + "]");
+        List<Route> result = getAll("type = ?", transportType);
+        Log.i(TAG, "Got [" + result.size() + "] routes for transport type [" + transportType + "]");
+        return result;
     }
 
     @Override

@@ -33,6 +33,10 @@ public class RouteService {
         return routeRepository.getAll();
     }
 
+    public List<Route> findAll(String transportType) {
+        return routeRepository.getAll(transportType);
+    }
+
     public void open() {
         routeRepository.open();
     }

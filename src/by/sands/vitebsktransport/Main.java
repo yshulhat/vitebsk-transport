@@ -1,5 +1,6 @@
 package by.sands.vitebsktransport;
 
+import by.sands.vitebsktransport.domain.TransportType;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,14 +15,21 @@ public class Main extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button cityRoutes = (Button) findViewById(R.id.city_routes);
+
+        final Button cityRoutes = (Button) findViewById(R.id.city_routes);
+
         cityRoutes.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), TransportNumberList.class);
-                startActivity(intent);
+                showtransportNumers(TransportType.CITY_BUS);
             }
         });
+    }
+
+    private void showtransportNumers(TransportType type) {
+        Intent intent = new Intent(getApplicationContext(), TransportNumberList.class);
+        intent.putExtra("type", type.getId());
+        startActivity(intent);
     }
 
     @Override

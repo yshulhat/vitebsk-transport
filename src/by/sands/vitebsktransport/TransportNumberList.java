@@ -24,13 +24,14 @@ public class TransportNumberList extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transport_number_list);
-        routeService = new RouteService(this);
-
-        List<Route> routes = routeService.findAll();
-        ArrayAdapter<Route> adapter = new ArrayAdapter<Route>(this, android.R.layout.simple_list_item_1, routes);
-        setListAdapter(adapter);
         // Show the Up button in the action bar.
         // getActionBar().setDisplayHomeAsUpEnabled(true);
+        routeService = new RouteService(this);
+
+        String transportType =  getIntent().getStringExtra("type");
+        List<Route> routes = routeService.findAll(transportType);
+        ArrayAdapter<Route> adapter = new ArrayAdapter<Route>(this, android.R.layout.simple_list_item_1, routes);
+        setListAdapter(adapter);
 
         final ListView busList = getListView();
         busList.setOnItemClickListener(new OnItemClickListener() {
