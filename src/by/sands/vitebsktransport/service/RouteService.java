@@ -1,10 +1,10 @@
 package by.sands.vitebsktransport.service;
 
-import java.util.List;
-
 import android.content.Context;
 import by.sands.vitebsktransport.domain.Route;
 import by.sands.vitebsktransport.repository.RouteRepository;
+
+import java.util.List;
 
 public class RouteService {
     private RouteRepository routeRepository;

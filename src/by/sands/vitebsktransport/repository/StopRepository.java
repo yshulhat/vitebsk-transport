@@ -12,7 +12,7 @@ import java.util.List;
 
 public class StopRepository extends AbstractRepository<Stop> {
     private static final String   TABLE = "stops";
-    private static final String[] COLUMNS = { "_id", "name", "coords" };
+    private static final String[] COLUMNS = { "_id", "name", "latitudeE6", "longitudeE6" };
 
     public StopRepository(Context context) {
         super(context, TABLE);
@@ -40,7 +40,8 @@ public class StopRepository extends AbstractRepository<Stop> {
         Stop s = new Stop();
         s.setId(cursor.getLong(0));
         s.setName(cursor.getString(1));
-        s.setCoords(cursor.getString(2));
+        s.setLatitudeE6(cursor.getInt(2));
+        s.setLongitudeE6(cursor.getInt(3));
         return s;
     }
 
@@ -53,7 +54,8 @@ public class StopRepository extends AbstractRepository<Stop> {
     protected ContentValues fillValues(Stop obj) {
         ContentValues values = new ContentValues();
         values.put("name", obj.getName());
-        values.put("coords", obj.getCoords());
+        values.put("latitudeE6", obj.getLatitudeE6());
+        values.put("longitudeE6", obj.getLongitudeE6());
         return values;
     }
 }

@@ -1,6 +1,5 @@
 package by.sands.vitebsktransport;
 
-import by.sands.vitebsktransport.domain.TransportType;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +7,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import by.sands.vitebsktransport.domain.TransportType;
 
 public class Main extends Activity {
 
@@ -16,12 +16,22 @@ public class Main extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final Button cityRoutes = (Button) findViewById(R.id.city_routes);
+        final Button cityRoutesBtn = (Button) findViewById(R.id.city_routes);
 
-        cityRoutes.setOnClickListener(new OnClickListener() {
+        cityRoutesBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 showtransportNumers(TransportType.CITY_BUS);
+            }
+        });
+
+        final Button mapBtn = (Button) findViewById(R.id.map_btn);
+
+        mapBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Map.class);
+                startActivity(intent);
             }
         });
     }

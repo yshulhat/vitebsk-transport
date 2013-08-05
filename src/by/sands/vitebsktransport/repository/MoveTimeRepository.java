@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.util.Log;
 import by.sands.vitebsktransport.domain.MoveTime;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MoveTimeRepository extends AbstractRepository<MoveTime> {
@@ -19,7 +20,16 @@ public class MoveTimeRepository extends AbstractRepository<MoveTime> {
 
     public List<MoveTime> getAll(long directionId) {
         Log.i(TAG, "Getting all move times for direction [" + directionId + "]");
-        List<MoveTime> result = getAll("direction_id = ?", Long.toString(directionId));
+        List<MoveTime> result = new ArrayList<MoveTime>();
+        Cursor cursor = getDb().query(true, TABLE, getAllColumns(), "direction_id = ?",
+                new String[] {Long.toString(directionId)}, null, null, "`order`", null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            MoveTime obj = cursorToDomain(cursor);
+            result.add(obj);
+            cursor.moveToNext();
+        }
+        cursor.close();
         Log.i(TAG, "Got [" + result.size() + "] move times for direction [" + directionId + "]");
         return result;
     }

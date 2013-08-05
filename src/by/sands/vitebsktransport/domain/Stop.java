@@ -2,15 +2,16 @@ package by.sands.vitebsktransport.domain;
 
 public class Stop extends DBObject {
     private String name;
-    private String coords;
+    private int latitudeE6;
+    private int longitudeE6;
 
     public Stop() {
     }
 
-    public Stop(String name, String coords) {
-        super();
+    public Stop(String name, int latitudeE6, int longitudeE6) {
         this.name = name;
-        this.coords = coords;
+        this.latitudeE6 = latitudeE6;
+        this.longitudeE6 = longitudeE6;
     }
 
     public String getName() {
@@ -21,12 +22,20 @@ public class Stop extends DBObject {
         this.name = name;
     }
 
-    public String getCoords() {
-        return coords;
+    public int getLatitudeE6() {
+        return latitudeE6;
     }
 
-    public void setCoords(String coords) {
-        this.coords = coords;
+    public void setLatitudeE6(int latitudeE6) {
+        this.latitudeE6 = latitudeE6;
+    }
+
+    public int getLongitudeE6() {
+        return longitudeE6;
+    }
+
+    public void setLongitudeE6(int longitudeE6) {
+        this.longitudeE6 = longitudeE6;
     }
 
     @Override

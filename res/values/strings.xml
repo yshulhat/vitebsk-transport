@@ -9,5 +9,7 @@
     <string name="title_activity_departures_list">Расписание</string>
     <string name="title_activity_stops_list">Остановки</string>
     <string name="title_activity_days_list">Дни курсирования</string>
+    <string name="title_activity_map">Карта</string>
+    <string name="annotation_clicked">Annotation \'%1$s\' clicked</string>
 
 </resources>
