@@ -2,12 +2,12 @@ package com.spax.vitebsktransport.repository;
 
 import static com.spax.vitebsktransport.Constants.TAG;
 
-import com.spax.vitebsktransport.domain.Departure;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
+
+import com.spax.vitebsktransport.domain.Departure;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,16 @@ public class DepartureRepository extends AbstractRepository<Departure> {
 
     public List<Departure> getAll(long directionId, String day) {
         Log.i(TAG, "Getting all departures for direction [" + directionId + "] and day [" + day + "]");
-        List<Departure> result = getAll("direction_id = ? and day = ?", Long.toString(directionId), day);
+        List<Departure> result = new ArrayList<Departure>();
+        Cursor cursor = getDb().query(true, TABLE, getAllColumns(), "direction_id = ? and day = ?",
+                new String[] {Long.toString(directionId), day}, null, null, "`time`", null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Departure obj = cursorToDomain(cursor);
+            result.add(obj);
+            cursor.moveToNext();
+        }
+        cursor.close();
         Log.i(TAG, "Got [" + result.size() + "] departures for direction [" + directionId + "] and day [" + day + "]");
         return result;
     }

@@ -2,7 +2,7 @@ package com.spax.vitebsktransport.domain;
 
 import java.util.Locale;
 
-public class Time {
+public class Time implements Comparable<Time> {
     private int hours;
     private int mins;
 
@@ -31,13 +31,25 @@ public class Time {
     }
 
     public void addMins(int delta) {
-        hours += (delta + mins) / 60;
-        mins = (delta + mins) % 60;
+        if (delta > 0) {
+            hours += (delta + mins) / 60;
+            if (hours == 24) {
+                hours = 0;
+            }
+            mins = (delta + mins) % 60;
+        }
     }
 
     @Override
     public String toString() {
         return String.format(Locale.ENGLISH, "%02d:%02d", hours, mins);
+    }
+
+    @Override
+    public int compareTo(Time t) {
+        int h1 = hours == 0 ? 24 : hours;
+        int h2 = t.hours == 0 ? 24 : t.hours;
+        return h1 > h2 ? 1 : h1 < h2 ? -1 : mins > t.mins ? 1 : mins < t.mins ? -1 : 0;
     }
 
 }

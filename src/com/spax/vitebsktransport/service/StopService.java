@@ -34,6 +34,10 @@ public class StopService {
         return stopRepository.getForDirection(directionId);
     }
 
+    public Stop find(long stopId) {
+        return stopRepository.getById(stopId);
+    }
+
     public void open() {
         stopRepository.open();
     }

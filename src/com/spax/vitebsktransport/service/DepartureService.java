@@ -1,5 +1,7 @@
 package com.spax.vitebsktransport.service;
 
+import android.content.Context;
+
 import com.spax.vitebsktransport.domain.Departure;
 import com.spax.vitebsktransport.domain.MoveTime;
 import com.spax.vitebsktransport.domain.Time;
@@ -7,9 +9,8 @@ import com.spax.vitebsktransport.domain.TimeTableRecord;
 import com.spax.vitebsktransport.repository.DepartureRepository;
 import com.spax.vitebsktransport.repository.MoveTimeRepository;
 
-import android.content.Context;
-
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class DepartureService {
@@ -43,14 +44,19 @@ public class DepartureService {
 
     public List<Time> getTimes(long directionId, long stopId, String day) {
         List<Time> result = new ArrayList<Time>();
+        List<Long> path = getPath(directionId);
+        List<MoveTime> times = moveTimeRepository.getAll(directionId);
         List<Departure> deps = departureRepository.getAll(directionId, day);
         for (Departure d : deps) {
-            String t = d.getTime();
-            Time time = parseTime(t);
-            int deltaTime = countDeltaTime(d, stopId);
-            time.addMins(deltaTime);
-            result.add(time);
+            if (isStopInPath(path, stopId, d.getFromStopId(), d.getToStopId())) {
+                String t = d.getTime();
+                Time time = parseTime(t);
+                int deltaTime = countDeltaTime(d, stopId, times);
+                time.addMins(deltaTime);
+                result.add(time);
+            }
         }
+        Collections.sort(result);
         return result;
     }
 
@@ -70,12 +76,46 @@ public class DepartureService {
                     rec.addTime(t);
                 }
             }
+            if (!rec.getTimes().isEmpty()) {
+                result.add(rec);
+            }
         }
         return result;
     }
 
-    private int countDeltaTime(Departure dep, long stopId) {
-        List<MoveTime> times = moveTimeRepository.getAll(dep.getDirectionId());
+    public List<Long> getPath(long directionId) {
+        List<Long> path = new ArrayList<Long>();
+        List<MoveTime> times = moveTimeRepository.getAll(directionId);
+        if (!times.isEmpty()) {
+            path.add(times.get(0).getFromStopId());
+            for (MoveTime mt : times) {
+                path.add(mt.getToStopId());
+            }
+        }
+        return path;
+    }
+
+    private boolean isStopInPath(List<Long> path, long selectedStop, long fromStop, long toStop) {
+        int beginIdx = path.indexOf(fromStop);
+        int endIdx = path.lastIndexOf(toStop);
+        int stopIdx = path.indexOf(selectedStop);
+        return stopIdx >= beginIdx && stopIdx <= endIdx;
+//        boolean baseFound = false;
+//        for (long s : path) {
+//            if (!baseFound && s == fromStop) {
+//                baseFound = true;
+//            }
+//            if (baseFound && s == selectedStop) {
+//                return true;
+//            }
+//            if (s == toStop) {
+//                break;
+//            }
+//        }
+//        return false;
+    }
+
+    private int countDeltaTime(Departure dep, long stopId, List<MoveTime> times) {
         int result = 0;
         boolean foundFirstStop = false;
         for (MoveTime t : times) {

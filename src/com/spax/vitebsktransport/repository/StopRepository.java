@@ -20,6 +20,19 @@ public class StopRepository extends AbstractRepository<Stop> {
         super(context, TABLE);
     }
 
+    public Stop getById(long id) {
+        Log.i(TAG, "Getting stop with id [" + id + "]");
+        Stop stop = null;
+        Cursor cursor = getDb().query(TABLE, COLUMNS, "_id = ?", new String[] {Long.toString(id)}, null, null, null);
+        cursor.moveToFirst();
+        if (!cursor.isAfterLast()) {
+            stop = cursorToDomain(cursor);
+        }
+        cursor.close();
+        Log.i(TAG, "Found stop [" + id + "]");
+        return stop;
+    }
+
     public List<Stop> getForDirection(long directionId) {
         Log.i(TAG, "Getting stops for direction [" + directionId + "]");
         List<Stop> result = new ArrayList<Stop>();

@@ -30,8 +30,8 @@ public class Map extends MapActivity implements OnRegionChangedListener, OnAnnot
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
-//        mapView = new PolarisMapView(this, "AIzaSyDMT5-O5mi8b4QPMUtz9agnawc5F9jXidQ");
-        mapView = new PolarisMapView(this, "AIzaSyDR3n6J0RYw0_OLdR-ZDWpSQVGrZz69sWs");
+        mapView = new PolarisMapView(this, "AIzaSyDMT5-O5mi8b4QPMUtz9agnawc5F9jXidQ");
+//        mapView = new PolarisMapView(this, "AIzaSyDR3n6J0RYw0_OLdR-ZDWpSQVGrZz69sWs");
         mapView.setUserTrackingButtonEnabled(true);
         mapView.setOnRegionChangedListenerListener(this);
         mapView.setOnAnnotationSelectionChangedListener(this);
