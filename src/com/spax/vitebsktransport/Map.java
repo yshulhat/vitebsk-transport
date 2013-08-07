@@ -1,10 +1,23 @@
 package com.spax.vitebsktransport;
 
+import android.annotation.TargetApi;
+import android.app.Dialog;
+import android.app.Notification;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager.LayoutParams;
 import android.text.TextUtils;
+import android.text.method.CharacterPickerDialog;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.cyrilmottier.polaris.Annotation;
@@ -14,14 +27,16 @@ import com.cyrilmottier.polaris.PolarisMapView.OnAnnotationSelectionChangedListe
 import com.cyrilmottier.polaris.PolarisMapView.OnRegionChangedListener;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
-import com.spax.vitebsktransport.R;
+import com.google.android.maps.MapController;
+import com.spax.vitebsktransport.domain.Stop;
+import com.spax.vitebsktransport.service.StopService;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Map extends MapActivity implements OnRegionChangedListener, OnAnnotationSelectionChangedListener {
-    private static final Annotation VITEBSK =
-            new Annotation(new GeoPoint(55194744, 30202209), "Vitebsk", "Some info about Vitebsk");
+    private StopService stopService;
+    private static final GeoPoint VITEBSK = new GeoPoint(55194744, 30202209);
 
     private PolarisMapView mapView;
 
@@ -29,21 +44,37 @@ public class Map extends MapActivity implements OnRegionChangedListener, OnAnnot
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
+        stopService = new StopService(this);
 
-        mapView = new PolarisMapView(this, "AIzaSyDMT5-O5mi8b4QPMUtz9agnawc5F9jXidQ");
-//        mapView = new PolarisMapView(this, "AIzaSyDR3n6J0RYw0_OLdR-ZDWpSQVGrZz69sWs");
+        // mapView = new PolarisMapView(this, "AIzaSyDR3n6J0RYw0_OLdR-ZDWpSQVGrZz69sWs"); // release
+        // key
+        mapView = new PolarisMapView(this, "AIzaSyDMT5-O5mi8b4QPMUtz9agnawc5F9jXidQ"); // debug key
         mapView.setUserTrackingButtonEnabled(true);
         mapView.setOnRegionChangedListenerListener(this);
         mapView.setOnAnnotationSelectionChangedListener(this);
 
-        final List<Annotation> annotations = Arrays.asList(VITEBSK);
+        List<Stop> stops = stopService.findAll();
+        final List<Annotation> annotations = stopsToAnnotations(stops);
 
-        mapView.setAnnotations(annotations, R.drawable.map_pin_holed_blue_normal);
+        mapView.setAnnotations(annotations, R.drawable.pin_bus);
         mapView.setBuiltInZoomControls(true);
 
         final FrameLayout mapViewContainer = (FrameLayout) findViewById(R.id.map_view_container);
         mapViewContainer.addView(mapView, new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT,
                 LayoutParams.MATCH_PARENT));
+
+        MapController mc = mapView.getController();
+        mc.setZoom(14);
+        mc.animateTo(VITEBSK);
+    }
+
+    private List<Annotation> stopsToAnnotations(List<Stop> stops) {
+        List<Annotation> result = new ArrayList<Annotation>();
+        for (Stop s : stops) {
+            result.add(new Annotation(new GeoPoint(s.getLatitudeE6(), s.getLongitudeE6()), s.getName(), "id: "
+                    + s.getId()));
+        }
+        return result;
     }
 
     @Override
@@ -65,12 +96,13 @@ public class Map extends MapActivity implements OnRegionChangedListener, OnAnnot
 
     @Override
     public void onRegionChanged(PolarisMapView mapView) {
-        Log.i(null, "onRegionChanged");
+        // Log.i(null, "onRegionChanged");
+        // Log.i(null, "Zoom: " + mapView.getZoomLevel());
     }
 
     @Override
     public void onRegionChangeConfirmed(PolarisMapView mapView) {
-        Log.i(null, "onRegionChangeConfirmed");
+        // Log.i(null, "onRegionChangeConfirmed");
     }
 
     @Override
@@ -99,5 +131,27 @@ public class Map extends MapActivity implements OnRegionChangedListener, OnAnnot
         Toast.makeText(this, getString(R.string.annotation_clicked, annotation.getTitle()), Toast.LENGTH_SHORT).show();
     }
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_map, menu);
+        // MenuItem searchItem = menu.findItem(R.id.action_search);
+        // SearchView searchView = (SearchView) searchItem.getActionView();
+        return super.onCreateOptionsMenu(menu);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case R.id.action_search:
+            openSearch();
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void openSearch() {
+        Log.i(null, "Search item clicked...");
+    }
 }

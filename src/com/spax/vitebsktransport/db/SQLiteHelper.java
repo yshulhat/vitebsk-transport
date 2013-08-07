@@ -14,7 +14,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public class SQLiteHelper extends SQLiteOpenHelper {
-    private static final int DB_VERSION = 1;
+    private static final String DB_PATH = "//data//data//%s//databases//";
+    private static final int DB_VERSION = 3;
     public static final String DB_NAME = "time_table.db";
 
     private Context ctx;
@@ -22,9 +23,13 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public SQLiteHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
         ctx = context;
+        openDataBase(getDbPath(context));
+    }
+
+    private String getDbPath(Context context) {
         String packageName = context.getPackageName();
-        String dbPath = String.format("//data//data//%s//databases//", packageName);
-        openDataBase(dbPath);
+        String dbPath = String.format(DB_PATH, packageName);
+        return dbPath;
     }
 
     private void openDataBase(String dbPath) throws SQLException {
@@ -34,7 +39,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     }
 
     public void createDataBase(String dbPath) {
-        boolean dbExist = checkDataBase(dbPath);
+        boolean dbExist = isDbExists(dbPath);
         if (!dbExist) {
             getReadableDatabase();
             try {
@@ -48,7 +53,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         }
     }
 
-    private boolean checkDataBase(String dbPath) {
+    private boolean isDbExists(String dbPath) {
         SQLiteDatabase checkDb = null;
         try {
             String path = dbPath + DB_NAME;
@@ -84,6 +89,11 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     // TODO: move here copying BD file if new version comes
     @Override
     public void onUpgrade(SQLiteDatabase db, int v1, int v2) {
+        try {
+            copyDataBase(getDbPath(ctx));
+        } catch (IOException e) {
+            Log.e(TAG, "Unable to upgrade DB!");
+        }
     }
 
 }
