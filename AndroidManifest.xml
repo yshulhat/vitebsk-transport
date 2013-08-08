@@ -8,7 +8,8 @@
         android:minSdkVersion="7"
         android:targetSdkVersion="15" />
 
-    <uses-feature
+    <!--
+    uses-feature
         android:name="android.hardware.location.gps"
         android:required="false" />
     <uses-feature
@@ -29,7 +30,8 @@
         android:name="com.spax.vitebsktransport.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="com.spax.vitebsktransport.permission.MAPS_RECEIVE" />
+    <uses-permission android:name="com.spax.vitebsktransport.permission.MAPS_RECEIVE" /
+    -->
 
     <application
         android:allowBackup="true"
@@ -80,17 +82,25 @@
         </activity>
 
         <!--
-             meta-data
+        meta-data
                 android:name="com.google.android.maps.v2.API_KEY"
-                android:value="AIzaSyDMT5-O5mi8b4QPMUtz9agnawc5F9jXidQ" /
-        -->
+                android:value="AIzaSyDMT5-O5mi8b4QPMUtz9agnawc5F9jXidQ" />
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyCRFuJARmsrVTerzQbYz54EjTT6xDz57KE" />
+            android:value="AIzaSyCRFuJARmsrVTerzQbYz54EjTT6xDz57KE" /
+        -->
 
         <activity
             android:name="com.spax.vitebsktransport.StopsSearch"
             android:label="@string/title_activity_stops_search" >
+        </activity>
+        <activity
+            android:name="com.spax.vitebsktransport.ExpTest"
+            android:label="@string/title_activity_exp_test" >
+        </activity>
+        <activity
+            android:name="com.spax.vitebsktransport.ExpandableDeparturesList"
+            android:label="@string/title_activity_expandable_departures_list" >
         </activity>
     </application>
 

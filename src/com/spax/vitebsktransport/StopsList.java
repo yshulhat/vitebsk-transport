@@ -46,7 +46,7 @@ public class StopsList extends ListActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Stop stop = (Stop) busList.getItemAtPosition(position);
                 if (stop != null) {
-                    Intent intent = new Intent(getApplicationContext(), DaysList.class);
+                    Intent intent = new Intent(getApplicationContext(), ExpandableDeparturesList.class);
                     intent.putExtra("direction", directionId);
                     intent.putExtra("stop", stop.getId());
                     intent.putExtra("routeName", routeName);
@@ -63,7 +63,6 @@ public class StopsList extends ListActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.activity_stops_list, menu);
         return true;
     }
