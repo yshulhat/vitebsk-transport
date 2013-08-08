@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
+import com.spax.vitebsktransport.adapters.StopAdapter;
 import com.spax.vitebsktransport.domain.Stop;
 import com.spax.vitebsktransport.service.StopService;
 
@@ -24,8 +25,8 @@ public class StopsSearch extends ListActivity {
         setContentView(R.layout.activity_stops_search);
         stopService = new StopService(this);
 
-        List<Stop> routes = stopService.findAll();
-        adapter = new ArrayAdapter<Stop>(this, android.R.layout.simple_list_item_1, routes);
+        List<Stop> stops = stopService.findAll();
+        adapter = new StopAdapter(this, R.layout.stops_list_item, stops);
         setListAdapter(adapter);
 
         field = (EditText) findViewById(R.id.stop_search_field);

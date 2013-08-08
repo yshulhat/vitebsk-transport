@@ -39,14 +39,10 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView,
             ViewGroup parent) {
-        final String text = (String) getChild(groupPosition, childPosition);
-
         if (convertView == null) {
             LayoutInflater inflater = context.getLayoutInflater();
             convertView = inflater.inflate(R.layout.child_item, parent, false);
         }
-
-        TextView item = (TextView) convertView.findViewById(R.id.departure_item);
 
         ImageView delete = (ImageView) convertView.findViewById(R.id.delete);
         if (delete != null) {
@@ -73,6 +69,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             });
         }
 
+        TextView item = (TextView) convertView.findViewById(R.id.departure_item);
+        String text = (String) getChild(groupPosition, childPosition);
         item.setText(text);
         return convertView;
     }

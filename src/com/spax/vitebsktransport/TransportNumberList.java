@@ -25,8 +25,6 @@ public class TransportNumberList extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transport_number_list);
-        // Show the Up button in the action bar.
-        // getActionBar().setDisplayHomeAsUpEnabled(true);
         routeService = new RouteService(this);
 
         String transportType =  getIntent().getStringExtra("type");
@@ -59,33 +57,8 @@ public class TransportNumberList extends ListActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.activity_bus_number_list, menu);
+        getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
-    }
-
-    public void onClick(View view) {
-        @SuppressWarnings("unchecked")
-        ArrayAdapter<Route> adapter = (ArrayAdapter<Route>) getListAdapter();
-        // Route route = null;
-        switch (view.getId()) {
-        // case R.id.add:
-        // String[] numbers = new String[] { "1", "2", "2a" };
-        // String[] names = new String[] { "Минск - Пинск", "Витебск - Брест", "Минск - Шминск" };
-        // int nextInt = new Random().nextInt(3);
-        // // Save the new comment to the database
-        // route = routeService.create(numbers[nextInt], names[nextInt]);
-        // adapter.add(route);
-        // break;
-        // case R.id.delete:
-        // if (getListAdapter().getCount() > 0) {
-        // route = (Route) getListAdapter().getItem(0);
-        // routeService.delete(route);
-        // adapter.remove(route);
-        // }
-        // break;
-        }
-        adapter.notifyDataSetChanged();
     }
 
     @Override

@@ -5,21 +5,27 @@
     android:padding="10dp" >
  
     <TextView
-        android:id="@+id/departure_item"
+        android:id="@+id/stop_list_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:paddingLeft="25dp"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <ImageView
-        android:id="@+id/delete"
+        android:id="@+id/start_point"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/end_point"
+        android:contentDescription="@string/app_name"
+        android:src="@android:drawable/ic_menu_set_as" />
+
+    <ImageView
+        android:id="@+id/end_point"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:src="@android:drawable/ic_delete"
-        android:contentDescription="@string/app_name"
-        android:visibility="invisible"/>
+        android:src="@android:drawable/ic_menu_myplaces"
+        android:contentDescription="@string/app_name"/>
 
 </RelativeLayout>

@@ -40,11 +40,11 @@ public class DaysList extends ListActivity {
         final String routeName =  getIntent().getStringExtra("routeName");
         setTitle("Дни курсирования маршрута №" + routeName);
 
-        final ListView busList = getListView();
-        busList.setOnItemClickListener(new OnItemClickListener() {
+        final ListView daysList = getListView();
+        daysList.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                String day = (String) busList.getItemAtPosition(position);
+                String day = (String) daysList.getItemAtPosition(position);
                 if (day != null) {
                     Intent intent = new Intent(getApplicationContext(), DeparturesList.class);
                     intent.putExtra("direction", directionId);
@@ -65,7 +65,7 @@ public class DaysList extends ListActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.activity_days_list, menu);
+        getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
 

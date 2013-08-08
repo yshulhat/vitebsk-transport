@@ -8,9 +8,9 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import com.spax.vitebsktransport.R;
+
+import com.spax.vitebsktransport.adapters.StopAdapter;
 import com.spax.vitebsktransport.domain.Stop;
 import com.spax.vitebsktransport.service.StopService;
 
@@ -34,7 +34,8 @@ public class StopsList extends ListActivity {
                 .setPositiveButton("Ok", null).show();
         } else {
             List<Stop> routes = stopService.findByDirection(directionId);
-            setListAdapter(new ArrayAdapter<Stop>(this, android.R.layout.simple_list_item_1, routes));
+//            setListAdapter(new ArrayAdapter<Stop>(this, android.R.layout.simple_list_item_1, routes));
+            setListAdapter(new StopAdapter(this, R.layout.stops_list_item, routes));
         }
 
         final String routeName =  getIntent().getStringExtra("routeName");
@@ -63,7 +64,7 @@ public class StopsList extends ListActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_stops_list, menu);
+        getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
 

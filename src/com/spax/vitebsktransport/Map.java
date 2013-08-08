@@ -1,23 +1,13 @@
 package com.spax.vitebsktransport;
 
 import android.annotation.TargetApi;
-import android.app.Dialog;
-import android.app.Notification;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager.LayoutParams;
 import android.text.TextUtils;
-import android.text.method.CharacterPickerDialog;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.cyrilmottier.polaris.Annotation;
@@ -134,24 +124,10 @@ public class Map extends MapActivity implements OnRegionChangedListener, OnAnnot
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_map, menu);
+        getMenuInflater().inflate(R.menu.main_menu, menu);
         // MenuItem searchItem = menu.findItem(R.id.action_search);
         // SearchView searchView = (SearchView) searchItem.getActionView();
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-        case R.id.action_search:
-            openSearch();
-            return true;
-        default:
-            return super.onOptionsItemSelected(item);
-        }
-    }
-
-    private void openSearch() {
-        Log.i(null, "Search item clicked...");
-    }
 }
