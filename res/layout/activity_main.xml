@@ -4,24 +4,6 @@
     android:layout_height="match_parent"
     tools:context=".Main" >
 
-    <Button
-        android:id="@+id/city_routes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="14dp"
-        android:text="Городские автобусы" />
-
-    <Button
-        android:id="@+id/stops"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="14dp"
-        android:text="Остановки" />
-
     <!-- Button
         android:id="@+id/map_btn"
         android:layout_width="wrap_content"
@@ -30,5 +12,24 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
         android:text="Карта" /-->
+
+    <Button
+        android:id="@+id/city_routes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="21dp"
+        android:text="Городские автобусы" />
+
+    <Button
+        android:id="@+id/stop_search_btn"
+        style="@drawable/btn_blue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/city_routes"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="19dp"
+        android:text="Остановки" />
 
 </RelativeLayout>

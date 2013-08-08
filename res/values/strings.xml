@@ -12,5 +12,7 @@
     <string name="title_activity_map">Карта</string>
     <string name="annotation_clicked">Annotation \'%1$s\' clicked</string>
     <string name="title_activity_map_test">MapTest</string>
+    <string name="title_activity_stops_search">Поиск остановки</string>
+    <string name="action_settings">Settings</string>
 
 </resources>

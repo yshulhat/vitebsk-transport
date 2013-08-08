@@ -18,11 +18,18 @@ public class Main extends Activity {
         setContentView(R.layout.activity_main);
 
         final Button cityRoutesBtn = (Button) findViewById(R.id.city_routes);
-
         cityRoutesBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 showtransportNumers(TransportType.CITY_BUS);
+            }
+        });
+
+        final Button stopSearchBtn = (Button) findViewById(R.id.stop_search_btn);
+        stopSearchBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), StopsSearch.class));
             }
         });
 
