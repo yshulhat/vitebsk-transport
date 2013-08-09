@@ -15,7 +15,7 @@ import java.io.OutputStream;
 
 public class SQLiteHelper extends SQLiteOpenHelper {
     private static final String DB_PATH = "//data//data//%s//databases//";
-    private static final int DB_VERSION = 3;
+    private static final int DB_VERSION = 7;
     public static final String DB_NAME = "time_table.db";
 
     private Context ctx;

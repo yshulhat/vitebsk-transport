@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
 import com.spax.vitebsktransport.adapters.StopAdapter;
@@ -16,7 +15,7 @@ import java.util.List;
 
 public class StopsSearch extends ListActivity {
     private StopService stopService;
-    private ArrayAdapter<Stop> adapter;
+    private StopAdapter adapter;
     private EditText field;
 
     @Override
@@ -53,7 +52,7 @@ public class StopsSearch extends ListActivity {
         }
 
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            adapter.getFilter().filter(s);
+            adapter.filter(s);
         }
     };
 }

@@ -41,15 +41,15 @@ public class Main extends Activity {
             }
         });
 
-//        final Button mapBtn = (Button) findViewById(R.id.map_btn);
-//
-//        mapBtn.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(getApplicationContext(), MapTest.class);
-//                startActivity(intent);
-//            }
-//        });
+        final Button mapBtn = (Button) findViewById(R.id.map_btn);
+
+        mapBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Map.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void showtransportNumers(TransportType type) {
