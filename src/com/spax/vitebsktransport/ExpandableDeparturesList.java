@@ -41,7 +41,7 @@ public class ExpandableDeparturesList extends Activity {
                 .setMessage("Ошибка открытия расписания")
                 .setPositiveButton("Ok", null).show();
         } else {
-            Map<String, List<String>> groupedItems = new LinkedHashMap<String, List<String>>();
+            Map<String, List<TimeTableRecord>> groupedItems = new LinkedHashMap<String, List<TimeTableRecord>>();
             List<String> days = departureService.findDaysForDirection(directionId);
 
             for (String day : days) {
@@ -50,7 +50,8 @@ public class ExpandableDeparturesList extends Activity {
             }
 
             expListView = (ExpandableListView) findViewById(R.id.dep_list);
-            final ExpandableListAdapter expListAdapter = new ExpandableListAdapter(this, days, groupedItems);
+            final ExpandableListAdapter expListAdapter = new ExpandableListAdapter(this, days, groupedItems,
+                    R.layout.tt_child_item);
             expListView.setAdapter(expListAdapter);
 
             setGroupIndicatorToRight();
@@ -79,10 +80,10 @@ public class ExpandableDeparturesList extends Activity {
         }
     }
 
-    private List<String> formChilds(List<TimeTableRecord> laptopModels) {
-        List<String> items = new ArrayList<String>();
-        for (TimeTableRecord model : laptopModels) {
-            items.add(model.toString());
+    private List<TimeTableRecord> formChilds(List<TimeTableRecord> laptopModels) {
+        List<TimeTableRecord> items = new ArrayList<TimeTableRecord>();
+        for (TimeTableRecord rec : laptopModels) {
+            items.add(rec);
         }
         return items;
     }

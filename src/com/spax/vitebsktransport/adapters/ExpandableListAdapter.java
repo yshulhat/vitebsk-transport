@@ -1,90 +1,104 @@
 package com.spax.vitebsktransport.adapters;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.ImageView;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.spax.vitebsktransport.R;
+import com.spax.vitebsktransport.domain.Time;
+import com.spax.vitebsktransport.domain.TimeTableRecord;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private Activity context;
-    private Map<String, List<String>> groups;
-    private List<String> items;
+    private Map<String, List<TimeTableRecord>> items;
+    private List<String> groups;
+    private int childItemLayout;
 
-    public ExpandableListAdapter(Activity context, List<String> items, Map<String, List<String>> groups) {
+    public ExpandableListAdapter(Activity context, List<String> groups, Map<String,
+            List<TimeTableRecord>> items, int childItemLayout) {
         this.context = context;
-        this.groups = groups;
         this.items = items;
+        this.groups = groups;
+        this.childItemLayout = childItemLayout;
     }
 
-    public Object getChild(int groupPosition, int childPosition) {
-        return groups.get(items.get(groupPosition)).get(childPosition);
+    public TimeTableRecord getChild(int groupPosition, int childPosition) {
+        return items.get(groups.get(groupPosition)).get(childPosition);
     }
 
     public long getChildId(int groupPosition, int childPosition) {
         return childPosition;
     }
 
+    @SuppressLint("InlinedApi")
     public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView,
             ViewGroup parent) {
-        if (convertView == null) {
+        LinearLayout lout = (LinearLayout) convertView;
+        if (lout == null) {
             LayoutInflater inflater = context.getLayoutInflater();
-            convertView = inflater.inflate(R.layout.child_item, parent, false);
+            lout = (LinearLayout) inflater.inflate(childItemLayout, parent, false);
         }
 
-        ImageView delete = (ImageView) convertView.findViewById(R.id.delete);
-        if (delete != null) {
-            delete.setOnClickListener(new OnClickListener() {
+        lout.removeViews(1, lout.getChildCount() - 1);
+
+        TimeTableRecord rec = getChild(groupPosition, childPosition);
+        TextView item = (TextView) lout.findViewById(R.id.hour_item);
+        item.setText(rec.getTimes().get(0).getStringHours() + ": ");
+
+        Date now = new Date();
+        for (final Time t: rec.getTimes()) {
+            Button btn = new Button(context);
+            btn.setMinHeight(40);
+            btn.setMinWidth(40);
+            btn.setText(t.getStringMins());
+            Calendar c = new GregorianCalendar();
+            c.set(Calendar.HOUR_OF_DAY, t.getHours() == 0 ? 24 : t.getHours());
+            c.set(Calendar.MINUTE, t.getMins());
+            if (c.getTime().after(now)) {
+                btn.setTypeface(null, Typeface.BOLD);
+            }
+            btn.setBackgroundResource(R.drawable.back_btn_light);
+            LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+            lp.setMargins(3, 0, 3, 0);
+            btn.setOnClickListener(new OnClickListener() {
+                @Override
                 public void onClick(View v) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setMessage("Do you want to remove?");
-                    builder.setCancelable(false);
-                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            List<String> child = groups.get(items.get(groupPosition));
-                            child.remove(childPosition);
-                            notifyDataSetChanged();
-                        }
-                    });
-                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.cancel();
-                        }
-                    });
-                    AlertDialog alertDialog = builder.create();
-                    alertDialog.show();
+                    Toast.makeText(context, "Вы выбрали время " + t.toString(), Toast.LENGTH_SHORT).show();
                 }
             });
-        }
 
-        TextView item = (TextView) convertView.findViewById(R.id.departure_item);
-        String text = (String) getChild(groupPosition, childPosition);
-        item.setText(text);
-        return convertView;
+            lout.addView(btn, lp);
+        }
+        return lout;
     }
 
     public int getChildrenCount(int groupPosition) {
-        return groups.get(items.get(groupPosition)).size();
+        return items.get(groups.get(groupPosition)).size();
     }
 
     public Object getGroup(int groupPosition) {
-        return items.get(groupPosition);
+        return groups.get(groupPosition);
     }
 
     public int getGroupCount() {
-        return items.size();
+        return groups.size();
     }
 
     public long getGroupId(int groupPosition) {

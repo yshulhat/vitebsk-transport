@@ -33,16 +33,7 @@ public class Main extends Activity {
             }
         });
 
-        final Button testBtn = (Button) findViewById(R.id.btn_test);
-        testBtn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), ExpTest.class));
-            }
-        });
-
         final Button mapBtn = (Button) findViewById(R.id.map_btn);
-
         mapBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

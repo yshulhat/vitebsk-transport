@@ -34,12 +34,12 @@ public class StopsList extends ListActivity {
                 .setPositiveButton("Ok", null).show();
         } else {
             List<Stop> routes = stopService.findByDirection(directionId);
-//            setListAdapter(new ArrayAdapter<Stop>(this, android.R.layout.simple_list_item_1, routes));
             setListAdapter(new StopAdapter(this, R.layout.stops_list_item, routes));
         }
 
         final String routeName =  getIntent().getStringExtra("routeName");
-        setTitle("Остановки маршрута №" + routeName);
+        final String dirName =  getIntent().getStringExtra("directionName");
+        setTitle("№" + routeName + ", " + dirName);
 
         final ListView busList = getListView();
         busList.setOnItemClickListener(new OnItemClickListener() {

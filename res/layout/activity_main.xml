@@ -6,6 +6,7 @@
 
     <Button
         android:id="@+id/city_routes"
+        android:background="@drawable/back_btn_light"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -15,7 +16,7 @@
 
     <Button
         android:id="@+id/stop_search_btn"
-        style="@drawable/btn_blue"
+        android:background="@drawable/back_btn_light"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/city_routes"
@@ -25,6 +26,7 @@
 
     <Button
         android:id="@+id/btn_test"
+        android:background="@drawable/back_btn_light"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/stop_search_btn"
@@ -35,6 +37,7 @@
 
     <Button
         android:id="@+id/map_btn"
+        android:background="@drawable/back_btn_light"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/stop_search_btn"

@@ -50,6 +50,7 @@ public class DirectionsList extends ListActivity {
                 if (direction != null) {
                     Intent intent = new Intent(getApplicationContext(), StopsList.class);
                     intent.putExtra("direction", direction.getId());
+                    intent.putExtra("directionName", direction.getName());
                     intent.putExtra("routeName", routeName);
                     startActivity(intent);
                 } else {

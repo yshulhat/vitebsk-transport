@@ -40,6 +40,14 @@ public class Time implements Comparable<Time> {
         }
     }
 
+    public String getStringHours() {
+        return String.format(Locale.ENGLISH, "%02d", hours);
+    }
+
+    public String getStringMins() {
+        return String.format(Locale.ENGLISH, "%02d", mins);
+    }
+
     @Override
     public String toString() {
         return String.format(Locale.ENGLISH, "%02d:%02d", hours, mins);
