@@ -14,6 +14,11 @@ public class Time implements Comparable<Time> {
         this.mins = mins;
     }
 
+    public Time(Time time) {
+        this.hours = time.hours;
+        this.mins = time.mins;
+    }
+
     public int getHours() {
         return hours;
     }
@@ -30,7 +35,7 @@ public class Time implements Comparable<Time> {
         this.mins = mins;
     }
 
-    public void addMins(int delta) {
+    public Time addMins(int delta) {
         if (delta > 0) {
             hours += (delta + mins) / 60;
             if (hours == 24) {
@@ -38,6 +43,24 @@ public class Time implements Comparable<Time> {
             }
             mins = (delta + mins) % 60;
         }
+        return this;
+    }
+
+    public Time subMins(int delta) {
+        if (delta > 0) {
+            int dh = delta / 60;
+            int dm = delta % 60;
+            if (dm > mins) {
+                hours -= 1;
+                mins += 60;
+            }
+            mins -= dm;
+            hours -= dh;
+            if (hours < 0) {
+                hours = 24 - hours;
+            }
+        }
+        return this;
     }
 
     public String getStringHours() {
@@ -58,6 +81,15 @@ public class Time implements Comparable<Time> {
         int h1 = hours == 0 ? 24 : hours;
         int h2 = t.hours == 0 ? 24 : t.hours;
         return h1 > h2 ? 1 : h1 < h2 ? -1 : mins > t.mins ? 1 : mins < t.mins ? -1 : 0;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o != null && o.getClass() == Time.class) {
+            Time t = (Time) o;
+            return t.hours == hours && t.mins == mins;
+        }
+        return false;
     }
 
 }

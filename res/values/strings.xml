@@ -16,5 +16,6 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_exp_test">ExpTest</string>
     <string name="title_activity_expandable_departures_list">Расписание</string>
+    <string name="title_activity_time_details">Следование по маршруту</string>
 
 </resources>

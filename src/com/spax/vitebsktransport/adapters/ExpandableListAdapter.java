@@ -3,6 +3,7 @@ package com.spax.vitebsktransport.adapters;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +14,9 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.spax.vitebsktransport.R;
+import com.spax.vitebsktransport.TimeDetails;
 import com.spax.vitebsktransport.domain.Time;
 import com.spax.vitebsktransport.domain.TimeTableRecord;
 
@@ -30,13 +31,17 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private Map<String, List<TimeTableRecord>> items;
     private List<String> groups;
     private int childItemLayout;
+    private long directionId;
+    private long stopId;
 
-    public ExpandableListAdapter(Activity context, List<String> groups, Map<String,
-            List<TimeTableRecord>> items, int childItemLayout) {
+    public ExpandableListAdapter(Activity context, List<String> groups, Map<String, List<TimeTableRecord>> items,
+            long directionId, long stopId, int childItemLayout) {
         this.context = context;
         this.items = items;
         this.groups = groups;
         this.childItemLayout = childItemLayout;
+        this.directionId = directionId;
+        this.stopId = stopId;
     }
 
     public TimeTableRecord getChild(int groupPosition, int childPosition) {
@@ -80,7 +85,13 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             btn.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, "Вы выбрали время " + t.toString(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context, "Вы выбрали время " + t.toString(), Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(context, TimeDetails.class);
+                    intent.putExtra("hours", t.getHours());
+                    intent.putExtra("mins", t.getMins());
+                    intent.putExtra("direction", directionId);
+                    intent.putExtra("stop", stopId);
+                    context.startActivity(intent);
                 }
             });
 

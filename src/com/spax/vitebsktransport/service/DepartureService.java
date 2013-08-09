@@ -4,10 +4,13 @@ import android.content.Context;
 
 import com.spax.vitebsktransport.domain.Departure;
 import com.spax.vitebsktransport.domain.MoveTime;
+import com.spax.vitebsktransport.domain.Stop;
+import com.spax.vitebsktransport.domain.StopTimeHolder;
 import com.spax.vitebsktransport.domain.Time;
 import com.spax.vitebsktransport.domain.TimeTableRecord;
 import com.spax.vitebsktransport.repository.DepartureRepository;
 import com.spax.vitebsktransport.repository.MoveTimeRepository;
+import com.spax.vitebsktransport.repository.StopRepository;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,10 +19,12 @@ import java.util.List;
 public class DepartureService {
     private DepartureRepository departureRepository;
     private MoveTimeRepository moveTimeRepository;
+    private StopRepository stopRepository;
 
     public DepartureService(Context ctx) {
         departureRepository = new DepartureRepository(ctx);
         moveTimeRepository = new MoveTimeRepository(ctx);
+        stopRepository = new StopRepository(ctx);
     }
 
     public Departure create(Departure route) {
@@ -100,19 +105,6 @@ public class DepartureService {
         int endIdx = path.lastIndexOf(toStop);
         int stopIdx = path.indexOf(selectedStop);
         return stopIdx >= beginIdx && stopIdx <= endIdx;
-//        boolean baseFound = false;
-//        for (long s : path) {
-//            if (!baseFound && s == fromStop) {
-//                baseFound = true;
-//            }
-//            if (baseFound && s == selectedStop) {
-//                return true;
-//            }
-//            if (s == toStop) {
-//                break;
-//            }
-//        }
-//        return false;
     }
 
     private int countDeltaTime(Departure dep, long stopId, List<MoveTime> times) {
@@ -139,6 +131,24 @@ public class DepartureService {
 
     public List<String> findDaysForDirection(long directionId) {
         return departureRepository.getDaysForDirection(directionId);
+    }
+
+    public List<StopTimeHolder> getRouteDetailsForTime(Time time, long stopId, long directionId) {
+        List<StopTimeHolder> result = new ArrayList<StopTimeHolder>();
+
+        List<Long> path = getPath(directionId);
+        int from = path.indexOf(stopId);
+        result.add(new StopTimeHolder(stopRepository.getById(from), time));
+        List<MoveTime> times = moveTimeRepository.getAll(directionId);
+        int delta = 0;
+
+        for (int i = from + 1; i < path.size(); i++) {
+            Stop s = stopRepository.getById(path.get(i));
+            delta += times.get(i-1).getTime();
+            Time t = new Time(time).addMins(delta);
+            result.add(new StopTimeHolder(s, t));
+        }
+        return result;
     }
 
     public void open() {

@@ -51,7 +51,7 @@ public class ExpandableDeparturesList extends Activity {
 
             expListView = (ExpandableListView) findViewById(R.id.dep_list);
             final ExpandableListAdapter expListAdapter = new ExpandableListAdapter(this, days, groupedItems,
-                    R.layout.tt_child_item);
+                    directionId, stopId, R.layout.tt_child_item);
             expListView.setAdapter(expListAdapter);
 
             setGroupIndicatorToRight();
