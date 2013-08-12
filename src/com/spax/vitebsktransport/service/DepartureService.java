@@ -138,9 +138,11 @@ public class DepartureService {
 
         List<Long> path = getPath(directionId);
         int fromIdx = path.indexOf(stopId);
-        int toIdx = path.indexOf(stopId);
         result.add(new StopTimeHolder(stopRepository.getById(path.get(fromIdx)), time));
         List<MoveTime> times = moveTimeRepository.getAll(directionId);
+        Time baseTime = calculateBaseTime(time, stopId, times);
+        Departure dep = departureRepository.get(directionId, baseTime.toString());
+        long toIdx = dep.getToStopId();
         int delta = 0;
 
         for (int i = fromIdx + 1; i < path.size(); i++) {
@@ -148,7 +150,22 @@ public class DepartureService {
             delta += times.get(i-1).getTime();
             Time t = new Time(time).addMins(delta);
             result.add(new StopTimeHolder(s, t));
+            if (path.get(i) == toIdx) {
+                break;
+            }
         }
+        return result;
+    }
+
+    private Time calculateBaseTime(Time stopTime, long stopId, List<MoveTime> times) {
+        int delta = 0;
+        for (int i = 0; i < times.size(); i++) {
+            if (times.get(i).getFromStopId() == stopId) {
+                break;
+            }
+            delta += times.get(i).getTime();
+        }
+        Time result = new Time(stopTime).subMins(delta);
         return result;
     }
 

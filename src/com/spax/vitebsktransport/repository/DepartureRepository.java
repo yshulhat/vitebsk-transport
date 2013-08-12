@@ -51,6 +51,23 @@ public class DepartureRepository extends AbstractRepository<Departure> {
         return result;
     }
 
+    public Departure get(long directionId, String time) {
+        Log.i(TAG, "Getting departure for direction [" + directionId + "] and time [" + time + "]");
+        Cursor cursor = getDb().query(true, TABLE, getAllColumns(), "direction_id = ? and time = ?",
+                new String[] {Long.toString(directionId), time}, null, null, null, null);
+        cursor.moveToFirst();
+        if (!cursor.isAfterLast()) {
+            try {
+                Departure obj = cursorToDomain(cursor);
+                Log.i(TAG, "Got [" + obj + "] for direction [" + directionId + "] and time [" + time + "]");
+                return obj;
+            } finally {
+                cursor.close();
+            }
+        }
+        return null;
+    }
+
     @Override
     protected Departure cursorToDomain(Cursor cursor) {
         Departure d = new Departure();
