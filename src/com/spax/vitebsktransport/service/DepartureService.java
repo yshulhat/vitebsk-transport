@@ -137,12 +137,13 @@ public class DepartureService {
         List<StopTimeHolder> result = new ArrayList<StopTimeHolder>();
 
         List<Long> path = getPath(directionId);
-        int from = path.indexOf(stopId);
-        result.add(new StopTimeHolder(stopRepository.getById(from), time));
+        int fromIdx = path.indexOf(stopId);
+        int toIdx = path.indexOf(stopId);
+        result.add(new StopTimeHolder(stopRepository.getById(path.get(fromIdx)), time));
         List<MoveTime> times = moveTimeRepository.getAll(directionId);
         int delta = 0;
 
-        for (int i = from + 1; i < path.size(); i++) {
+        for (int i = fromIdx + 1; i < path.size(); i++) {
             Stop s = stopRepository.getById(path.get(i));
             delta += times.get(i-1).getTime();
             Time t = new Time(time).addMins(delta);
